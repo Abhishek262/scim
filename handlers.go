@@ -6,11 +6,11 @@ import (
 	"log"
 	"net/http"
 
-	iap "github.com/elimity-com/scim/internal/intersight_api"
+	iap "github.com/abhishek262/scim/internal/intersight_api"
 
-	"github.com/elimity-com/scim/errors"
-	f "github.com/elimity-com/scim/internal/filter"
-	"github.com/elimity-com/scim/schema"
+	"github.com/abhishek262/scim/errors"
+	f "github.com/abhishek262/scim/internal/filter"
+	"github.com/abhishek262/scim/schema"
 )
 
 func errorHandler(w http.ResponseWriter, _ *http.Request, scimErr *errors.ScimError) {

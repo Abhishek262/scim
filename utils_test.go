@@ -1,9 +1,10 @@
 package scim
 
 import (
-	"github.com/elimity-com/scim/errors"
 	"reflect"
 	"testing"
+
+	"github.com/abhishek262/scim/errors"
 )
 
 func assertEqual(t *testing.T, expected, actual interface{}) {

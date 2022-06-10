@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/elimity-com/scim/errors"
-	"github.com/elimity-com/scim/optional"
+	"github.com/abhishek262/scim/errors"
+	"github.com/abhishek262/scim/optional"
 )
 
 func ExampleResourceHandler() {

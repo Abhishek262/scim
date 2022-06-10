@@ -1,6 +1,6 @@
 package schema
 
-import "github.com/elimity-com/scim/optional"
+import "github.com/abhishek262/scim/optional"
 
 // ComplexParams are the parameters used to create a complex attribute.
 type ComplexParams struct {

@@ -8,11 +8,11 @@ import (
 	"strconv"
 	"strings"
 
-	f "github.com/elimity-com/scim/internal/filter"
+	f "github.com/abhishek262/scim/internal/filter"
 	"github.com/scim2/filter-parser/v2"
 
-	"github.com/elimity-com/scim/errors"
-	"github.com/elimity-com/scim/schema"
+	"github.com/abhishek262/scim/errors"
+	"github.com/abhishek262/scim/schema"
 )
 
 const (

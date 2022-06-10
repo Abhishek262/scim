@@ -6,11 +6,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/elimity-com/scim"
-	"github.com/elimity-com/scim/errors"
-	internal "github.com/elimity-com/scim/internal/filter"
-	"github.com/elimity-com/scim/optional"
-	"github.com/elimity-com/scim/schema"
+	"github.com/abhishek262/scim"
+	"github.com/abhishek262/scim/errors"
+	internal "github.com/abhishek262/scim/internal/filter"
+	"github.com/abhishek262/scim/optional"
+	"github.com/abhishek262/scim/schema"
 	"github.com/scim2/filter-parser/v2"
 )
 

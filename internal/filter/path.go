@@ -1,7 +1,7 @@
 package filter
 
 import (
-	"github.com/elimity-com/scim/schema"
+	"github.com/abhishek262/scim/schema"
 	"github.com/scim2/filter-parser/v2"
 )
 

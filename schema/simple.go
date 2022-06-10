@@ -1,6 +1,6 @@
 package schema
 
-import "github.com/elimity-com/scim/optional"
+import "github.com/abhishek262/scim/optional"
 
 // BinaryParams are the parameters used to create a simple attribute with a data type of "binary".
 // The attribute value MUST be base64 encoded. In JSON representation, the encoded values are represented as a JSON string.

@@ -3,10 +3,11 @@ package patch
 import (
 	"encoding/json"
 	"fmt"
-	f "github.com/elimity-com/scim/internal/filter"
-	"github.com/elimity-com/scim/schema"
-	"github.com/scim2/filter-parser/v2"
 	"strings"
+
+	f "github.com/abhishek262/scim/internal/filter"
+	"github.com/abhishek262/scim/schema"
+	"github.com/scim2/filter-parser/v2"
 )
 
 // Op represents the possible value the operation is to perform.

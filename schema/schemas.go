@@ -1,6 +1,6 @@
 package schema
 
-import "github.com/elimity-com/scim/optional"
+import "github.com/abhishek262/scim/optional"
 
 // CommonAttributes returns all the common attributes.
 func CommonAttributes() []CoreAttribute {

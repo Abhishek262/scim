@@ -1,4 +1,4 @@
-module github.com/elimity-com/scim
+module github.com/abhishek262/scim
 
 go 1.16
 

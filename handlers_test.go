@@ -10,9 +10,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/elimity-com/scim/errors"
-	"github.com/elimity-com/scim/optional"
-	"github.com/elimity-com/scim/schema"
+	"github.com/abhishek262/scim/errors"
+	"github.com/abhishek262/scim/optional"
+	"github.com/abhishek262/scim/schema"
 )
 
 func TestInvalidRequests(t *testing.T) {

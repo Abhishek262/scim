@@ -2,8 +2,9 @@ package patch
 
 import (
 	"fmt"
-	"github.com/elimity-com/scim/schema"
 	"testing"
+
+	"github.com/abhishek262/scim/schema"
 )
 
 // The following example shows how remove all members of a group.
