@@ -2,9 +2,10 @@ package patch
 
 import (
 	"fmt"
-	"github.com/elimity-com/scim/schema"
-	"github.com/scim2/filter-parser/v2"
 	"testing"
+
+	"github.com/abhishek262/scim/schema"
+	"github.com/scim2/filter-parser/v2"
 )
 
 func TestNewPathValidator(t *testing.T) {

@@ -8,9 +8,9 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/elimity-com/scim"
-	"github.com/elimity-com/scim/optional"
-	"github.com/elimity-com/scim/schema"
+	"github.com/abhishek262/scim"
+	"github.com/abhishek262/scim/optional"
+	"github.com/abhishek262/scim/schema"
 )
 
 func Test_Group_Filter(t *testing.T) {

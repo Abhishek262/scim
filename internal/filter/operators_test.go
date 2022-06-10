@@ -1,9 +1,10 @@
 package filter_test
 
 import (
-	internal "github.com/elimity-com/scim/internal/filter"
-	"github.com/elimity-com/scim/schema"
 	"testing"
+
+	internal "github.com/abhishek262/scim/internal/filter"
+	"github.com/abhishek262/scim/schema"
 )
 
 // TestValidatorInvalidResourceTypes contains all the cases where an *errors.ScimError gets returned.

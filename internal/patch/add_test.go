@@ -2,7 +2,8 @@ package patch
 
 import (
 	"fmt"
-	"github.com/elimity-com/scim/schema"
+
+	"github.com/abhishek262/scim/schema"
 )
 
 // The following example shows how to add a member to a group.

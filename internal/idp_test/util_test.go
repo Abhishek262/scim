@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 
-	"github.com/elimity-com/scim"
+	"github.com/abhishek262/scim"
 )
 
 func getNewServer(idpName string) scim.Server {
