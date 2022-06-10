@@ -2,8 +2,11 @@ package scim
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+
+	iap "github.com/elimity-com/scim/internal/intersight_api"
 
 	"github.com/elimity-com/scim/errors"
 	f "github.com/elimity-com/scim/internal/filter"
@@ -47,6 +50,8 @@ func (s Server) resourceGetHandler(w http.ResponseWriter, r *http.Request, id st
 	}
 
 	raw, err := json.Marshal(resource.response(resourceType))
+	fmt.Println("-----------------------")
+	fmt.Println(resource.response(resourceType))
 	if err != nil {
 		errorHandler(w, r, &errors.ScimErrorInternal)
 		log.Fatalf("failed marshaling resource: %v", err)
@@ -107,13 +112,15 @@ func (s Server) resourcePatchHandler(w http.ResponseWriter, r *http.Request, id 
 // defined by the associated resource type endpoint discovery to create new resources.
 func (s Server) resourcePostHandler(w http.ResponseWriter, r *http.Request, resourceType ResourceType) {
 	data, _ := readBody(r)
-
+	// fmt.Println(data)
 	attributes, scimErr := resourceType.validate(data)
+	fmt.Println("attributes")
+
+	fmt.Println(attributes)
 	if scimErr != nil {
 		errorHandler(w, r, scimErr)
 		return
 	}
-
 	resource, postErr := resourceType.Handler.Create(r, attributes)
 	if postErr != nil {
 		scimErr := errors.CheckScimError(postErr, http.MethodPost)
@@ -133,11 +140,30 @@ func (s Server) resourcePostHandler(w http.ResponseWriter, r *http.Request, reso
 	}
 
 	w.WriteHeader(http.StatusCreated)
+	fmt.Println("-----------------------")
+	fmt.Println(resource.response(resourceType))
 
 	_, err = w.Write(raw)
 	if err != nil {
 		log.Printf("failed writing response: %v", err)
 	}
+	s.resourcePostIntersightHandler(attributes, resourceType)
+}
+
+func (s Server) resourcePostIntersightHandler(attr ResourceAttributes, resourceType ResourceType) {
+
+	// request to create user in intersight
+	c := iap.GetDefaultConfig()
+
+	jsonStr := `{"Idpreference":{"ObjectType":"iam.IdpReference",
+	"Moid":"624d786e7564612d33e68ff3"},"UserIdOrEmail":"` + attr["userName"].(string) +
+		`","Permissions":[{"ObjectType":"iam.Permission","Moid":"624d786e7564612d33e68ff8"}]}`
+
+	rawJson := []byte(jsonStr)
+
+	lBody, err := c.SendPostRequest("api/v1/iam/Users", rawJson)
+	fmt.Println(err)
+	fmt.Println(string(lBody))
 }
 
 // resourcePutHandler receives an HTTP PUT to the resource endpoint, e.g., "/Users/{id}" or "/Groups/{id}", where
@@ -150,8 +176,10 @@ func (s Server) resourcePutHandler(w http.ResponseWriter, r *http.Request, id st
 		errorHandler(w, r, scimErr)
 		return
 	}
-
+	fmt.Println("attributes")
+	fmt.Println(attributes)
 	resource, putError := resourceType.Handler.Replace(r, id, attributes)
+
 	if putError != nil {
 		scimErr := errors.CheckScimError(putError, http.MethodPut)
 		errorHandler(w, r, &scimErr)
@@ -173,6 +201,40 @@ func (s Server) resourcePutHandler(w http.ResponseWriter, r *http.Request, id st
 	if err != nil {
 		log.Printf("failed writing response: %v", err)
 	}
+	s.resourceDeleteIntersightHandler(attributes, resourceType)
+}
+func (s Server) resourceDeleteIntersightHandler(attr ResourceAttributes, resourceType ResourceType) {
+
+	// request to create user in intersight
+	c := iap.GetDefaultConfig()
+
+	// jsonStr := `{"Idpreference":{"ObjectType":"iam.IdpReference",
+	// "Moid":"624d786e7564612d33e68ff3"},"UserIdOrEmail":"` + attr["userName"].(string) +
+	// 	`","Permissions":[{"ObjectType":"iam.Permission","Moid":"624d786e7564612d33e68ff8"}]}`
+
+	//get with filter
+	data := []byte(`{}`)
+	email := attr["userName"].(string)
+	lBody, err := c.SendGetRequest("api/v1/iam/Users?$filter=Email%20eq%20%27"+email+"%27&$select=Moid", data)
+
+	var getResult map[string]interface{}
+	if err := json.Unmarshal(lBody, &getResult); err != nil {
+		log.Fatal(err)
+	}
+
+	userMap := getResult["Results"].([]interface{})
+	// userMoid := userMap["Moid"]
+	fmt.Println(err)
+	userMap2 := userMap[0].(map[string]interface{})
+	fmt.Println(userMap2)
+	userMoid := userMap2["Moid"].(string)
+	fmt.Println("GET req DELETE ----")
+
+	delStr := "api/v1/iam/Users/"
+	lBody, err2 := c.SendDeleteRequest(delStr + userMoid)
+	fmt.Println(err2)
+	fmt.Println(string(lBody))
+
 }
 
 // resourceTypeHandler receives an HTTP GET to retrieve individual resource types which can be returned by appending the

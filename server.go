@@ -2,12 +2,14 @@ package scim
 
 import (
 	"fmt"
-	f "github.com/elimity-com/scim/internal/filter"
-	"github.com/scim2/filter-parser/v2"
+	"log"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
+
+	f "github.com/elimity-com/scim/internal/filter"
+	"github.com/scim2/filter-parser/v2"
 
 	"github.com/elimity-com/scim/errors"
 	"github.com/elimity-com/scim/schema"
@@ -62,9 +64,18 @@ type Server struct {
 
 // ServeHTTP dispatches the request to the handler whose pattern most closely matches the request URL.
 func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	// var buff string
+	// buff = "inside server"
+	// b := []byte(buff)
+	// err := ioutil.WriteFile("output.txt", b, 0644)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
 	w.Header().Set("Content-Type", "application/scim+json")
 
-	path := strings.TrimPrefix(r.URL.Path, "/v2")
+	path := strings.TrimPrefix(r.URL.Path, "/iam/scim")
+	log.Println("PATH:", path)
 
 	switch {
 	case path == "/Me":
@@ -93,6 +104,7 @@ func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		if path == resourceType.Endpoint {
 			switch r.Method {
 			case http.MethodPost:
+				fmt.Println("post req")
 				s.resourcePostHandler(w, r, resourceType)
 				return
 			case http.MethodGet:
@@ -125,7 +137,7 @@ func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	errorHandler(w, r, &errors.ScimError{
-		Detail: "Specified endpoint does not exist.",
+		Detail: "Specified endpoint does hafjahfnot exist. " + path,
 		Status: http.StatusNotFound,
 	})
 }
